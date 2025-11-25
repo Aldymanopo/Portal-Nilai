@@ -1,39 +1,46 @@
-function ambilDataNilai() {
-    const btn = document.getElementById("btn-muat");
-    const loading = document.getElementById("loading");
-    const tabel = document.getElementById("tabel-nilai");
-    const tbody = document.getElementById("isi-tabel");
+const dataMahasiswa = {
+    namaDepan: "Aldy",
+    namaBelakang: "Manoppo",
+    nilai: [
+        { matkul: "Bahasa Inggris", angka: 85 },
+        { matkul: "Pemrograman", angka: 90 },
+        { matkul: "Basis Data", angka: 88 }
+    ]
+};
 
-    // Tampilkan loading
-    btn.disabled = true;
-    loading.style.display = "block";
-    tabel.style.display = "none";
+function tampilkanNilai() {
+    // 1. Ambil elemen HTML tempat kita akan menaruh data
+    const areaHasil = document.getElementById('area-hasil');
+    const namaMhs = document.getElementById('nama-mhs');
+    const tabelBody = document.getElementById('tabel-body');
 
-    // Panggil API Python
-    fetch('/api/get-nilai')
-        .then(response => response.json())
-        .then(data => {
-            // Kosongkan tabel lama
-            tbody.innerHTML = "";
+    // 2. Isi Nama Mahasiswa
+    namaMhs.innerText = "Nama: " + dataMahasiswa.namaDepan + " " + dataMahasiswa.namaBelakang;
 
-            // Masukkan data baru (Looping)
-            data.forEach(item => {
-                let row = `<tr>
-                    <td>${item.nama}</td>
-                    <td>${item.matkul}</td>
-                    <td><strong>${item.nilai}</strong></td>
-                </tr>`;
-                tbody.innerHTML += row;
-            });
+    // 3. Kosongkan tabel dulu (agar tidak dobel jika tombol ditekan 2x)
+    tabelBody.innerHTML = "";
 
-            // Tampilkan tabel, sembunyikan loading
-            loading.style.display = "none";
-            tabel.style.display = "table";
-            btn.disabled = false;
-            btn.innerText = "Refresh Nilai";
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            loading.innerText = "Gagal mengambil data.";
-        });
+    // 4. Masukkan data nilai ke dalam tabel (Looping)
+    dataMahasiswa.nilai.forEach(function(item) {
+        // Buat baris baru (tr)
+        let baris = document.createElement('tr');
+
+        // Isi kolom Mata Kuliah
+        let kolMatkul = document.createElement('td');
+        kolMatkul.innerText = item.matkul;
+
+        // Isi kolom Nilai
+        let kolAngka = document.createElement('td');
+        kolAngka.innerText = item.angka;
+
+        // Gabungkan ke dalam baris
+        baris.appendChild(kolMatkul);
+        baris.appendChild(kolAngka);
+
+        // Masukkan baris ke tabel
+        tabelBody.appendChild(baris);
+    });
+
+    // 5. Munculkan area hasil (ubah display none jadi block)
+    areaHasil.style.display = "block";
 }
