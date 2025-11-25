@@ -1,1 +1,0 @@
-# Kartu-Hasil-Studi
