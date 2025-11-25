@@ -4,37 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Nilai Mahasiswa</title>
-    <!-- Menghubungkan ke file CSS -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
     <div class="container">
         <h1>Kartu Hasil Studi (KHS)</h1>
-        <p>Universitas GitHub Indonesia</p>
+        <button id="btn-muat" onclick="ambilDataNilai()">Cek Nilai Saya</button>
+        
+        <div id="loading" style="display:none;">Sedang memuat data RDF...</div>
 
-        <!-- Tombol untuk memunculkan data -->
-        <button onclick="tampilkanNilai()" class="btn-cek">Cek Nilai Saya</button>
-
-        <!-- Tempat hasil nilai akan muncul -->
-        <div id="area-hasil" style="display: none; margin-top: 20px;">
-            <h2 id="nama-mhs">Nama: -</h2>
-            
-            <table class="tabel-nilai">
-                <thead>
-                    <tr>
-                        <th>Mata Kuliah</th>
-                        <th>Nilai</th>
-                    </tr>
-                </thead>
-                <tbody id="tabel-body">
-                    <!-- Data nilai akan masuk ke sini lewat JavaScript -->
+        <table id="tabel-nilai" style="display:none;">
+            <thead>
+                <tr>
+                    <th>Nama Mahasiswa</th>
+                    <th>Mata Kuliah</th>
+                    <th>Nilai Akhir</th>
+                </tr>
+            </thead>
+            <tbody id="isi-tabel">
                 </tbody>
-            </table>
-        </div>
+        </table>
     </div>
 
-    <!-- Menghubungkan ke file JavaScript -->
-    <script src="script.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
